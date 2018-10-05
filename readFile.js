@@ -10,7 +10,7 @@ let fs = require('file-system');
 //     });
 //   }
 // });
-let file = fs.createReadStream('./reviews.csv');
+let file = fs.createReadStream('./reviewData.csv');
 var data = '';
 
 file.on('data', function(chunk) {

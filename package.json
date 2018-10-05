@@ -5,7 +5,8 @@
   "main": "dataGen2.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "spawn": "node --max-old-space-size=8192 ./dataGen.js",
+    "spawnProduct": "node --max-old-space-size=8192 ./productInfoGenerator.js",
+    "spawnReview": "node --max-old-space-size=8192 ./reviewDataGenerator.js",
     "diagnose": "node --max-old-space-size=8192 ./readFile.js"
   },
   "author": "",

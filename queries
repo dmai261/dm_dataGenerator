@@ -1,0 +1,44 @@
+cassandra queries: 
+
+INSERT INTO reviews (productid, productname, reviewid, username, stars, title, text, timestamp, numhelpful, verifiedpurchase, imageurl) VALUES (10000000,'Egg 10000000',10000002,'jackychan123',5,'oh god','what is this review','Wed Nov 29 2017 13:21:16 GMT-0800',69,true,'none');
+select * from reviews where productid = 10000000 and productname = 'Egg 100000000';
+CREATE TABLE reviews (productid int, productname varchar, reviewid int, username varchar, stars int, title varchar, text varchar, timestamp varchar, numhelpful int, verifiedpurchase boolean, imageurl varchar, PRIMARY KEY ((productid, productname), reviewid)) ;
+COPY reviews (productid, productname,reviewid,username,stars,title,text,timestamp,numhelpful,verifiedpurchase,imageurl) FROM './reviews.csv' WITH HEADER = true;
+
+postgresql queries: 
+
+INSERT INTO reviews VALUES (10000000,'Egg 10000000',10000002,'jackychan123',5,'oh god','what is this review','Wed Nov 29 2017 13:21:16 GMT-0800',69,true,'none');
+select * from reviews where productid = 10000000;
+create table reviews (productId integer, productName text, reviewId integer, username text, stars integer, title text, text text, timestamp text, numHelpful integer, verifiedPurchase boolean, imageUrl text);
+
+create table productInfo (
+  productid integer, 
+  productname text
+);
+
+create table reviewsData (
+  productid integer,
+  reviewid integer,
+  username text, 
+  stars integer, 
+  title text, 
+  text text, 
+  timestamp text, 
+  numhelpful integer, 
+  verifiedpurchase boolean, 
+  imageurl text, 
+  PRIMARY KEY(productid),
+  FOREIGN KEY (productid) REFERENCES productInfo(productid);
+);
+
+\copy reviews from './reviews.csv' with delimiter ',' CSV HEADER;
+
+SELECT reviewsData.*, productinfo.productname FROM reviewsData INNER JOIN productinfo ON (reviewsData.productid = productinfo.productid AND productinfo.productid = 10000000);
+
+//queries to test time
+
+explain analyze select * from reviewsData INNER JOIN productinfo on (reviewsData.productid = productinfo.productid AND productinfo.productid = 5);
+
+explain analyze SELECT reviewsData.*, productinfo.productname FROM reviewsData INNER JOIN productinfo ON (reviewsData.productid = productinfo.productid AND productinfo.productid = 10000000);
+
+explain analyze INSERT INTO reviewsData VALUES (1000000,500010008,'jackychan123',5,'oh god','what is this review','Wed Nov 29 2017 13:21:16 GMT-0800',69,true,'none');
